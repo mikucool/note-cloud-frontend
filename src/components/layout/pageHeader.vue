@@ -1,146 +1,57 @@
 <template>
-  <header class="header has-background-white has-text-black">
-    <b-navbar class="container is-white" :fixed-top="true">
-      <template slot="brand">
+  <div>
+    <b-navbar :shadow="true" class="navbar is-white">
+      <template #start>
         
+        <b-navbar-item  @click="setHeader()"> Home </b-navbar-item>
+        <b-navbar-item href="#"> Documentation </b-navbar-item>
+        <b-navbar-dropdown label="Info">
+          <b-navbar-item href="#"> About </b-navbar-item>
+          <b-navbar-item href="#"> Contact </b-navbar-item>
+        </b-navbar-dropdown>
       </template>
 
-      <template slot="end">
-        <b-navbar-item tag="div">
-          <b-field position="is-centered">
-            <b-input
-              v-model="searchKey"
-              class="s_input"
-              width="80%"
-              placeholder="搜索笔记"
-              rounded
-              clearable
-              @keyup.enter.native="search()"
-            />
-
-            <p class="control">
-              <b-button class="is-info" @click="search()">检索 </b-button>
-            </p>
-          </b-field>
-        </b-navbar-item>
-
-        <b-navbar-item tag="div">
-          <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
-            {{ darkMode ? "夜" : "日" }}
-          </b-switch>
-        </b-navbar-item>
-
-        <!-- 如果没有登录，显示注册和登录 -->
-        <!-- <b-navbar-item v-if="token == null || token === ''" tag="div">
+      <template #end>
+        <b-navbar-item tag="div" >
           <div class="buttons">
-            <b-button
-              class="is-light"
-              tag="router-link"
-              :to="{ path: '/register' }"
-            >
-              注册
-            </b-button>
-            <b-button
-              class="is-light"
-              tag="router-link"
-              :to="{ path: '/login' }"
-            >
-              登录
-            </b-button>
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-dark"> Log in </a>
           </div>
-        </b-navbar-item> -->
-
-        <!-- 如果登录，显示下拉栏 -->
-        <!-- <b-navbar-dropdown v-else :label="user.alias">
-          <b-navbar-item
-            tag="router-link"
-            :to="{ path: `/member/${user.username}/home` }"
-          >
-            <i class="el-icon-user">个人中心</i>
-          </b-navbar-item>
-          <hr class="dropdown-divider" />
-          <b-navbar-item
-            tag="router-link"
-            :to="{ path: `/chat/${user.username}` }"
-          >
-            <i class="el-icon-s-promotion">聊天</i>
-          </b-navbar-item>
-          <hr class="dropdown-divider" />
-          <b-navbar-item
-            tag="router-link"
-            :to="{ path: `/member/${user.username}/setting` }"
-          >
-            <i class="el-icon-setting">设置</i>
-          </b-navbar-item>
-          <hr class="dropdown-divider" />
-          <b-navbar-item tag="a" @click="logout">
-            <i class="el-icon-switch-button">注销</i>
-          </b-navbar-item>
-        </b-navbar-dropdown> -->
+        </b-navbar-item>
       </template>
     </b-navbar>
-  </header>
+    <div id="aside">
+      <page-aside v-if="showHeader" />
+    </div>
+    
+  </div>
 </template>
 
 <script>
-import {
-  disable as disableDarkMode,
-  enable as enableDarkMode,
-} from "darkreader";
-import { getDarkMode, setDarkMode } from "@/utils/dark_mode";
-
+import pageAside from "./pageAside.vue";
 export default {
-  name: "pageHeader",
+  components: { pageAside },
   data() {
-    return {
-      //   logoUrl: require('@/assets/logo.png'),
-      //   doubaoImg: require('@/assets/image/doubao.png'),
-      searchKey: "",
-      darkMode: false,
-    };
+    return {showHeader: false};
   },
 
-  watch: {
-    // 监听Theme模式
-    darkMode(val) {
-      if (val) {
-        enableDarkMode({});
-      } else {
-        disableDarkMode();
-      }
-      // 将日夜模式保存到 cookie 中
-      setDarkMode(this.darkMode);
-    },
-  },
-  created() {
-    // 获取cookie中的夜间还是白天模式
-    this.darkMode = getDarkMode();
-    if (this.darkMode) {
-      enableDarkMode({});
-    } else {
-      disableDarkMode();
-    }
-  },
   methods: {
-    search() {
-      
-      if (this.searchKey.trim() === null || this.searchKey.trim() === "") {
-        this.$message.info({
-          showClose: true,
-          message: "请输入关键字搜索！",
-          type: "warning",
-        });
-        return false;
+    setHeader() {
+      if (this.showHeader) {
+        this.showHeader = false;
+      } else {
+        this.showHeader = true;
       }
-    },
-    
-  },
+    }
+  }
 };
 </script>
 
-<style scoped>
-input {
-  width: 80%;
-  height: 86%;
+<style>
+#aside {
+  position: absolute;
+  z-index: 20;
 }
 </style>
