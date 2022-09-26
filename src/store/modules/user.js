@@ -1,11 +1,15 @@
 import { login, getUserInfo, logout } from "@/api/auth";
-
+import { setToken, getToken } from "@/utils/auth";
 const state = {
+  token: getToken(), // token
   user: "", // 用户对象
 };
 
 // state 只能利用 mutations 进行改变
 const mutations = {
+  SET_TOKEN_STATE: (state, token) => {
+    state.token = token;
+  },
   SET_USER_STATE: (state, user) => {
     state.user = user;
   },
@@ -27,6 +31,9 @@ const actions = {
         .then((response) => {
           // 收到回应登录成功，并进行处理
           console.log(response);
+          commit("SET_TOKEN_STATE", response);
+          // 设置 token 到 Cookie 中保存
+          setToken(response);
           resolve();
         })
         .catch((error) => {

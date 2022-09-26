@@ -5,8 +5,6 @@ import user from  './modules/user'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
   getters: {
     user: state => state.user.user,  // 用户对象
   },

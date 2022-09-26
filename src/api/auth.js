@@ -10,11 +10,11 @@ export function userRegister(userDTO) {
 
 }
 // 登录
-export function login(loginDTO) {
+export function login(loginInfo) {
     return request({
         url: '/note-cloud/user/login',
         method: 'post',
-        data: loginDTO
+        data: loginInfo
     })
 }
 // 获取用户信息
