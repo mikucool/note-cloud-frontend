@@ -1,5 +1,5 @@
 import { login, getUserInfo, logout } from "@/api/auth";
-import { setToken, getToken } from "@/utils/auth";
+import { setToken, getToken, removeToken } from "@/utils/auth";
 const state = {
   token: getToken(), // token
   user: "", // 用户对象
@@ -63,12 +63,14 @@ const actions = {
     });
   },
   // 注销
-  logout({ commit }) {
+  logout({ commit }, token) {
     return new Promise((resolve, reject) => {
-      logout()
+      logout(token.data)
         .then((response) => {
           console.log(response);
           commit("SET_USER_STATE", "");
+          commit("SET_TOKEN_STATE", "");
+          removeToken();
           resolve();
         })
         .catch((error) => {

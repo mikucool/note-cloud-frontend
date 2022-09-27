@@ -25,10 +25,14 @@ export function getUserInfo() {
     })
 }
 // 退出登录
-export function logout() {
+export function logout(token) {
     return request({
         url: '/note-cloud/user/logout',
         method: 'get',
+        params: {
+            token: token
+        }
+    
     })
 }
 
