@@ -19,13 +19,13 @@ const actions = {
   // 用户登录
   // 参数：{ commit } 向 mutations 提交设置请求
   // 参数： userInfo 是接收的参数
-  login({commit}, userInfo) {
+  login({ commit }, userInfo) {
     commit('SET_USER_STATE', userInfo)
     // 取出参数的三个属性
     const { username, password, rememberMe } = userInfo;
     // es6 的 许诺
     return new Promise((resolve, reject) => {
-      
+
       // 调用 登录方法，向服务器发送请求
       login({ username: username.trim(), password: password, rememberMe: rememberMe })
         .then((response) => {
@@ -64,13 +64,13 @@ const actions = {
   },
   // 注销
   logout({ commit }, token) {
+    commit("SET_USER_STATE", "");
+    commit("SET_TOKEN_STATE", "");
+    removeToken();
     return new Promise((resolve, reject) => {
       logout(token.data)
         .then((response) => {
           console.log(response);
-          commit("SET_USER_STATE", "");
-          commit("SET_TOKEN_STATE", "");
-          removeToken();
           resolve();
         })
         .catch((error) => {

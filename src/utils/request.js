@@ -9,6 +9,7 @@ const service = axios.create({
   // baseURL: 'https://api.example.com', or 'http://localhost:8082/'
   // 超时时间 单位是ms，这里设置了5s的超时时间
   timeout: 5 * 1000,
+  // 设置允许 axois 请求携带 session 信息
   withCredentials: true
 })
 

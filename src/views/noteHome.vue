@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <page-header />
+      <page-header/>
     </div>
     <!-- 使用 bulma 做出两列的布局 -->
     <div class="columns mt-3 block">

@@ -10,7 +10,9 @@
       <div class="tile is-parent">
         <article class="tile is-child notification is-warning">
           <p class="title">Upload</p>
-          <p class="subtitle">Bar</p>
+          <p class="subtitle">
+          <upload-note></upload-note>
+          </p>
         </article>
       </div>
       <div class="tile is-parent">
@@ -26,7 +28,11 @@
 </template>
 
 <script>
-export default {};
+import uploadNote from './load/uploadNote.vue';
+
+export default {
+  components: {uploadNote}
+};
 </script>
 
 <style>

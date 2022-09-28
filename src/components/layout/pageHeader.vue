@@ -2,21 +2,19 @@
   <div>
     <b-navbar :shadow="true" class="navbar is-white">
       <template #start>
-        <b-navbar-item @click="setDropdown()"> Home </b-navbar-item>
-        <b-navbar-item href="#"> Documentation </b-navbar-item>
-        <b-navbar-dropdown label="Info">
-          <b-navbar-item href="#"> About </b-navbar-item>
-          <b-navbar-item href="#"> Contact </b-navbar-item>
-        </b-navbar-dropdown>
+        <b-navbar-item @click="setDropdown()"
+          ><i class="el-icon-s-operation"></i>
+        </b-navbar-item>
+        <b-navbar-item href="#/"> <i class="el-icon-s-home"></i> </b-navbar-item>
       </template>
 
       <template #end>
         <div v-if="token != null && token !== ''">
-         <b-navbar-item>
-          <b-button @click="logout">
-            <strong>Logout</strong>
-          </b-button>
-         </b-navbar-item>
+          <b-navbar-item>
+            <b-button @click="logout" type="is-primary">
+              <strong>Logout</strong>
+            </b-button>
+          </b-navbar-item>
         </div>
         <div v-else>
           <b-navbar-item tag="div">
@@ -24,8 +22,8 @@
               <a class="button is-primary" href="#/register">
                 <strong>Register</strong>
               </a>
-              <a class="button is-dark" href="#/login"> 
-              <strong>Login</strong>
+              <a class="button is-dark" href="#/login">
+                <strong>Login</strong>
               </a>
             </div>
           </b-navbar-item>
@@ -63,8 +61,7 @@ export default {
     async logout() {
       this.$store.dispatch("user/logout", this.token).then(() => {
         this.$message.info("logout successfully");
-        setTimeout(() => {
-        }, 500);
+        setTimeout(() => {}, 500);
       });
     },
   },
