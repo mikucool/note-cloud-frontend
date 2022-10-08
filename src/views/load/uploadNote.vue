@@ -8,30 +8,40 @@
       :on-remove="handleRemove"
       :before-remove="beforeRemove"
       multiple
-      :limit="3"
+      :limit="1"
       :on-exceed="handleExceed"
-      :file-list="fileList"
+      :on-change="change"
     >
       <el-button size="small" type="warning">选择上传</el-button>
 
       <div slot="tip" class="el-upload__tip">
-        只能上传md/pdf文件，且不超过500kb
+        只能上传md/pdf文件，且不超过5000kb
       </div>
     </el-upload>
     <el-button size="small" type="warning">重置选择</el-button>
-    <el-button size="small" type="warning" @click="test()">确认上传</el-button>
+    <el-button size="small" type="warning" @click="upload()">确认上传</el-button>
   </section>
 </template>
 <script>
+import { uploadNote } from '@/api/note'
+
 export default {
   data() {
     return {
-      backendURL: process.env.VUE_APP_SERVER_URL,
-      fileList: [],
       confirm: false,
+      noteFile: {},
     };
   },
   methods: {
+    change(file) {
+      console.log(file);
+      this.noteFile = file;
+    },
+    upload() {
+      console.log(this.noteFile);
+      uploadNote(this.noteFile).then((res) => {console.log(res)});
+
+    },
     handleRemove(file, fileList) {
       console.log("after");
       console.log("file" + file);
@@ -40,9 +50,9 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-    handleExceed(files) {
+    handleExceed() {
       this.$message.warning(
-        `files is limited 3 counts, you choose ${files.length} file`
+        `files is limited 1 count`
       );
     },
     beforeRemove(file, fileList) {
